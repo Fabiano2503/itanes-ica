@@ -32,4 +32,8 @@ public class PlaceRepository {
     public void deleteAllPlaces() {
         placeDao.deleteAll();
     }
+
+    public int getCount() {
+        return placeDao.getCount();
+    }
 }

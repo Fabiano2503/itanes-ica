@@ -23,4 +23,7 @@ public interface PlaceDao {
 
     @Query("DELETE FROM places")
     void deleteAll();
+
+    @Query("SELECT COUNT(*) FROM places")
+    int getCount();
 }
