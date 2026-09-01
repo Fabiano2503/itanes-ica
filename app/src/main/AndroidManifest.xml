@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PlacesActivity"
+            android:exported="false"
+            android:label="@string/tour_name" />
     </application>
 
 </manifest>

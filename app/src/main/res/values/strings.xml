@@ -4,4 +4,7 @@
     <string name="course_text">Trabajo Final - Desarrollo de Aplicaciones Móviles</string>
     <string name="places_count">5 puntos turísticos</string>
     <string name="button_explore">Explorar recorrido</string>
+
+    <string name="places_to_discover">5 lugares para descubrir</string>
+    <string name="placeholder_image_desc">Imagen del lugar</string>
 </resources>
