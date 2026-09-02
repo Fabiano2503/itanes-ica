@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.fabianoanticona.itanes.data.local.seed.PlaceDataSeeder;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.ui.places.PlacesActivity;
 
 public class MainActivity extends AppCompatActivity {
 

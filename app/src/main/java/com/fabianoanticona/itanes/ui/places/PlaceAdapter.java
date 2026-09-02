@@ -1,4 +1,4 @@
-package com.fabianoanticona.itanes;
+package com.fabianoanticona.itanes.ui.places;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fabianoanticona.itanes.R;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 
 import java.util.ArrayList;
@@ -16,7 +17,16 @@ import java.util.List;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
 
+    public interface OnPlaceClickListener {
+        void onPlaceClick(int placeId);
+    }
+
     private List<PlaceEntity> places = new ArrayList<>();
+    private final OnPlaceClickListener listener;
+
+    public PlaceAdapter(OnPlaceClickListener listener) {
+        this.listener = listener;
+    }
 
     public void setPlaces(List<PlaceEntity> places) {
         this.places = places;
@@ -33,7 +43,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         PlaceEntity place = places.get(position);
-        holder.bind(place);
+        holder.bind(place, listener);
     }
 
     @Override
@@ -53,11 +63,16 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
             textPlaceDescription = itemView.findViewById(R.id.textPlaceDescription);
         }
 
-        public void bind(PlaceEntity place) {
+        public void bind(PlaceEntity place, OnPlaceClickListener listener) {
             textPlaceName.setText(place.getName());
             textPlaceDescription.setText(place.getShortDescription());
-            // Placeholder local
             imagePlace.setImageResource(android.R.drawable.ic_menu_gallery);
+            
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onPlaceClick(place.getId());
+                }
+            });
         }
     }
 }

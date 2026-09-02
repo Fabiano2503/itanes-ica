@@ -7,4 +7,11 @@
 
     <string name="places_to_discover">5 lugares para descubrir</string>
     <string name="placeholder_image_desc">Imagen del lugar</string>
+
+    <string name="btn_favorite">Guardar en favoritos</string>
+    <string name="btn_share">Compartir</string>
+    <string name="btn_map">Ver en mapa</string>
+    <string name="label_address">Dirección:</string>
+    <string name="label_coordinates">Coordenadas:</string>
+    <string name="error_loading_place">Error al cargar el lugar</string>
 </resources>
