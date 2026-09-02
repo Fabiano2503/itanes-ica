@@ -39,6 +39,7 @@
             android:id="@+id/textPlaceDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"
