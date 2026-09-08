@@ -1,5 +1,7 @@
 package com.fabianoanticona.itanes.ui.detail;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,9 +33,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     private ImageView imageDetailPlace;
     private TextView textDetailName, textDetailShortDesc, textDetailFullDesc, textDetailAddress, textDetailCoords;
-    private Button btnFavorite;
+    private Button btnFavorite, btnShare;
     private boolean isFavorite = false;
     private int currentPlaceId = -1;
+    private PlaceEntity currentPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         checkFavoriteStatus(currentPlaceId);
 
         btnFavorite.setOnClickListener(v -> toggleFavorite());
+        btnShare.setOnClickListener(v -> sharePlace());
     }
 
     private void initViews() {
@@ -65,6 +69,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         textDetailAddress = findViewById(R.id.textDetailAddress);
         textDetailCoords = findViewById(R.id.textDetailCoords);
         btnFavorite = findViewById(R.id.btnFavorite);
+        btnShare = findViewById(R.id.btnShare);
     }
 
     private void loadPlaceDetail(int placeId) {
@@ -82,6 +87,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
     }
 
     private void displayPlace(PlaceEntity place) {
+        this.currentPlace = place;
         textDetailName.setText(place.getName());
         textDetailShortDesc.setText(place.getShortDescription());
         textDetailFullDesc.setText(place.getDescription());
@@ -122,6 +128,27 @@ public class PlaceDetailActivity extends AppCompatActivity {
             btnFavorite.setText(R.string.btn_favorite_remove);
         } else {
             btnFavorite.setText(R.string.btn_favorite_add);
+        }
+    }
+
+    private void sharePlace() {
+        if (currentPlace == null) return;
+
+        String shareBody = getString(R.string.share_message_format,
+                currentPlace.getName(),
+                currentPlace.getShortDescription(),
+                currentPlace.getAddress(),
+                getString(R.string.app_name));
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentPlace.getName());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+
+        try {
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.share_error, Toast.LENGTH_SHORT).show();
         }
     }
 }
