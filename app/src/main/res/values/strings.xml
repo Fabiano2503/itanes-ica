@@ -19,4 +19,14 @@
     <string name="share_chooser_title">Compartir lugar con&#8230;</string>
     <string name="share_error">No se encontró una aplicación para compartir.</string>
     <string name="share_message_format">%1$s\n%2$s\n\nDirección:\n%3$s\n\nCompartido desde %4$s</string>
+
+    <!-- MapActivity -->
+    <string name="map_loading">Cargando mapa...</string>
+    <string name="error_invalid_coords">Coordenadas del lugar no válidas.</string>
+    <string name="error_no_internet">No hay conexión a Internet para cargar el mapa.</string>
+
+    <!-- Accessibility -->
+    <string name="nav_back_desc">Regresar a la pantalla anterior</string>
+    <string name="zoom_in_desc">Acercar mapa</string>
+    <string name="zoom_out_desc">Alejar mapa</string>
 </resources>

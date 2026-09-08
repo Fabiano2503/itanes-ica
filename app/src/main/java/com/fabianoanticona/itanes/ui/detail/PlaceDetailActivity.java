@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.fabianoanticona.itanes.R;
@@ -16,6 +17,7 @@ import com.fabianoanticona.itanes.data.local.entity.FavoriteEntity;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 import com.fabianoanticona.itanes.data.repository.FavoriteRepository;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.ui.map.MapActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     private ImageView imageDetailPlace;
     private TextView textDetailName, textDetailShortDesc, textDetailFullDesc, textDetailAddress, textDetailCoords;
-    private Button btnFavorite, btnShare;
+    private Button btnFavorite, btnShare, btnMap;
     private boolean isFavorite = false;
     private int currentPlaceId = -1;
     private PlaceEntity currentPlace;
@@ -42,6 +44,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail);
+
+        Toolbar toolbar = findViewById(R.id.toolbarDetail);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         repository = new PlaceRepository(this);
         favoriteRepository = new FavoriteRepository(this);
@@ -59,6 +67,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         btnFavorite.setOnClickListener(v -> toggleFavorite());
         btnShare.setOnClickListener(v -> sharePlace());
+        btnMap.setOnClickListener(v -> openMap());
     }
 
     private void initViews() {
@@ -70,6 +79,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         textDetailCoords = findViewById(R.id.textDetailCoords);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnShare = findViewById(R.id.btnShare);
+        btnMap = findViewById(R.id.btnMap);
     }
 
     private void loadPlaceDetail(int placeId) {
@@ -150,5 +160,17 @@ public class PlaceDetailActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, R.string.share_error, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openMap() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(EXTRA_PLACE_ID, currentPlaceId);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

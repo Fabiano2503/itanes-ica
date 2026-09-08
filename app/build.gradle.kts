@@ -50,6 +50,9 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
+    // MapLibre
+    implementation(libs.maplibre.sdk)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

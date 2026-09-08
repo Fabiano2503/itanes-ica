@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,13 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places);
+
+        Toolbar toolbar = findViewById(R.id.toolbarPlaces);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.tour_name);
+        }
 
         repository = new PlaceRepository(this);
         initRecyclerView();
@@ -51,5 +59,11 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
         Intent intent = new Intent(this, PlaceDetailActivity.class);
         intent.putExtra(PlaceDetailActivity.EXTRA_PLACE_ID, placeId);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
