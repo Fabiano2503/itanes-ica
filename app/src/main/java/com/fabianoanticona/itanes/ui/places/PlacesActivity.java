@@ -40,6 +40,13 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
         loadPlaces();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Recargar datos al volver a la actividad para mostrar posibles actualizaciones de la sincronización
+        loadPlaces();
+    }
+
     private void initRecyclerView() {
         RecyclerView recyclerPlaces = findViewById(R.id.recyclerPlaces);
         recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
