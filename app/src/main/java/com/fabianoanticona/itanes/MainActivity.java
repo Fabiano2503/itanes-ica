@@ -11,7 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.fabianoanticona.itanes.data.local.seed.PlaceDataSeeder;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.ui.favorites.FavoritesActivity;
 import com.fabianoanticona.itanes.ui.places.PlacesActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,5 +42,37 @@ public class MainActivity extends AppCompatActivity {
 
         // Disparar sincronización con API REST
         repository.syncPlaces();
+
+        setupBottomNavigation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_home);
+    }
+
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_home);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                return true;
+            } else if (itemId == R.id.nav_places) {
+                Intent intent = new Intent(this, PlacesActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                return true;
+            } else if (itemId == R.id.nav_favorites) {
+                Intent intent = new Intent(this, FavoritesActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
     }
 }

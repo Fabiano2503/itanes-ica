@@ -1,61 +1,89 @@
-package com.fabianoanticona.itanes.ui.places;
+package com.fabianoanticona.itanes.ui.favorites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fabianoanticona.itanes.R;
 import com.fabianoanticona.itanes.MainActivity;
+import com.fabianoanticona.itanes.R;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
 import com.fabianoanticona.itanes.ui.detail.PlaceDetailActivity;
-import com.fabianoanticona.itanes.ui.favorites.FavoritesActivity;
+import com.fabianoanticona.itanes.ui.places.PlaceAdapter;
+import com.fabianoanticona.itanes.ui.places.PlacesActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.OnPlaceClickListener {
+public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter.OnPlaceClickListener {
 
     private PlaceAdapter adapter;
     private PlaceRepository repository;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private LinearLayout layoutEmptyState;
+    private RecyclerView recyclerFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_places);
+        setContentView(R.layout.activity_favorites);
 
-        Toolbar toolbar = findViewById(R.id.toolbarPlaces);
+        Toolbar toolbar = findViewById(R.id.toolbarFavorites);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.tour_name);
+            getSupportActionBar().setTitle(R.string.nav_favorites);
         }
 
         repository = new PlaceRepository(this);
+        layoutEmptyState = findViewById(R.id.layoutEmptyState);
+        recyclerFavorites = findViewById(R.id.recyclerFavorites);
+
         initRecyclerView();
-        loadPlaces();
         setupBottomNavigation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Recargar datos al volver a la actividad para mostrar posibles actualizaciones de la sincronización
-        loadPlaces();
-
+        loadFavorites();
+        
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_places);
+        bottomNav.setSelectedItemId(R.id.nav_favorites);
+    }
+
+    private void initRecyclerView() {
+        recyclerFavorites.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new PlaceAdapter(this);
+        recyclerFavorites.setAdapter(adapter);
+    }
+
+    private void loadFavorites() {
+        executorService.execute(() -> {
+            List<PlaceEntity> favorites = repository.getFavoritePlaces();
+            runOnUiThread(() -> {
+                if (favorites.isEmpty()) {
+                    layoutEmptyState.setVisibility(View.VISIBLE);
+                    recyclerFavorites.setVisibility(View.GONE);
+                } else {
+                    layoutEmptyState.setVisibility(View.GONE);
+                    recyclerFavorites.setVisibility(View.VISIBLE);
+                    adapter.setPlaces(favorites);
+                }
+            });
+        });
     }
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_places);
+        bottomNav.setSelectedItemId(R.id.nav_favorites);
 
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -65,28 +93,14 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_places) {
-                return true;
-            } else if (itemId == R.id.nav_favorites) {
-                Intent intent = new Intent(this, FavoritesActivity.class);
+                Intent intent = new Intent(this, PlacesActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 return true;
+            } else if (itemId == R.id.nav_favorites) {
+                return true;
             }
             return false;
-        });
-    }
-
-    private void initRecyclerView() {
-        RecyclerView recyclerPlaces = findViewById(R.id.recyclerPlaces);
-        recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PlaceAdapter(this);
-        recyclerPlaces.setAdapter(adapter);
-    }
-
-    private void loadPlaces() {
-        executorService.execute(() -> {
-            List<PlaceEntity> places = repository.getAllPlaces();
-            runOnUiThread(() -> adapter.setPlaces(places));
         });
     }
 
@@ -95,11 +109,5 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
         Intent intent = new Intent(this, PlaceDetailActivity.class);
         intent.putExtra(PlaceDetailActivity.EXTRA_PLACE_ID, placeId);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

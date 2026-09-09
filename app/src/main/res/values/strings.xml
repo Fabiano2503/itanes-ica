@@ -29,4 +29,13 @@
     <string name="nav_back_desc">Regresar a la pantalla anterior</string>
     <string name="zoom_in_desc">Acercar mapa</string>
     <string name="zoom_out_desc">Alejar mapa</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_places">Lugares</string>
+    <string name="nav_favorites">Favoritos</string>
+
+    <!-- Favorites Empty State -->
+    <string name="empty_favorites_title">Aún no tienes lugares favoritos</string>
+    <string name="empty_favorites_subtitle">Guarda lugares para encontrarlos rápidamente aquí</string>
 </resources>

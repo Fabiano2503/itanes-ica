@@ -26,4 +26,7 @@ public interface PlaceDao {
 
     @Query("SELECT COUNT(*) FROM places")
     int getCount();
+
+    @Query("SELECT places.* FROM places INNER JOIN favorites ON places.id = favorites.placeId ORDER BY favorites.createdAt DESC")
+    List<PlaceEntity> getFavoritePlaces();
 }

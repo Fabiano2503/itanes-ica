@@ -50,6 +50,10 @@ public class PlaceRepository {
         return placeDao.getCount();
     }
 
+    public List<PlaceEntity> getFavoritePlaces() {
+        return placeDao.getFavoritePlaces();
+    }
+
     public void syncPlaces() {
         Log.d(SYNC_TAG, "Iniciando sincronización");
 
