@@ -88,6 +88,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         executorService.execute(() -> {
             currentPlace = repository.getPlaceById(placeId);
             runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 progressBarMap.setVisibility(View.GONE);
                 if (currentPlace != null) {
                     displayPlaceInfo();

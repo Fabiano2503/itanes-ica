@@ -69,6 +69,7 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
         executorService.execute(() -> {
             List<PlaceEntity> favorites = repository.getFavoritePlaces();
             runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 if (favorites.isEmpty()) {
                     layoutEmptyState.setVisibility(View.VISIBLE);
                     recyclerFavorites.setVisibility(View.GONE);

@@ -86,6 +86,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         executorService.execute(() -> {
             PlaceEntity place = repository.getPlaceById(placeId);
             runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 if (place != null) {
                     displayPlace(place);
                 } else {
@@ -116,7 +117,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
     private void checkFavoriteStatus(int placeId) {
         executorService.execute(() -> {
             isFavorite = favoriteRepository.isFavorite(placeId);
-            runOnUiThread(this::updateFavoriteButton);
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                updateFavoriteButton();
+            });
         });
     }
 
@@ -129,7 +133,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
                 favoriteRepository.addFavorite(new FavoriteEntity(currentPlaceId, timestamp));
             }
             isFavorite = !isFavorite;
-            runOnUiThread(this::updateFavoriteButton);
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                updateFavoriteButton();
+            });
         });
     }
 

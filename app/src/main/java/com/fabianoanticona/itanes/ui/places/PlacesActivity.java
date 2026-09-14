@@ -86,7 +86,10 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     private void loadPlaces() {
         executorService.execute(() -> {
             List<PlaceEntity> places = repository.getAllPlaces();
-            runOnUiThread(() -> adapter.setPlaces(places));
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                adapter.setPlaces(places);
+            });
         });
     }
 
