@@ -17,6 +17,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private enum SyncState {
+        NOT_STARTED,
+        IN_PROGRESS,
+        COMPLETED_SUCCESS
+    }
+
+    private static SyncState syncState = SyncState.NOT_STARTED;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,15 +41,29 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Repositorio para carga inicial y sincronización
-        PlaceRepository repository = new PlaceRepository(this);
+        if (syncState == SyncState.NOT_STARTED) {
+            syncState = SyncState.IN_PROGRESS;
 
-        // Carga inicial de datos turísticos (Seed) si Room está vacío
-        PlaceDataSeeder seeder = new PlaceDataSeeder(repository);
-        seeder.seed();
+            // Repositorio para carga inicial y sincronización
+            PlaceRepository repository = new PlaceRepository(this);
 
-        // Disparar sincronización con API REST
-        repository.syncPlaces();
+            // Carga inicial de datos turísticos (Seed) si Room está vacío
+            PlaceDataSeeder seeder = new PlaceDataSeeder(repository);
+            seeder.seed();
+
+            // Disparar sincronización con API REST
+            repository.syncPlaces(new PlaceRepository.SyncCallback() {
+                @Override
+                public void onSuccess() {
+                    syncState = SyncState.COMPLETED_SUCCESS;
+                }
+
+                @Override
+                public void onFailure() {
+                    syncState = SyncState.NOT_STARTED;
+                }
+            });
+        }
 
         setupBottomNavigation();
     }

@@ -24,6 +24,11 @@ public class PlaceRepository {
     private final PlaceDao placeDao;
     private final ExecutorService executorService;
 
+    public interface SyncCallback {
+        void onSuccess();
+        void onFailure();
+    }
+
     public PlaceRepository(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         this.placeDao = db.placeDao();
@@ -55,6 +60,10 @@ public class PlaceRepository {
     }
 
     public void syncPlaces() {
+        syncPlaces(null);
+    }
+
+    public void syncPlaces(final SyncCallback callback) {
         Log.d(SYNC_TAG, "Iniciando sincronización");
 
         RetrofitClient.getApiService().getPlaces().enqueue(new Callback<List<PlaceRemoteDto>>() {
@@ -71,15 +80,27 @@ public class PlaceRepository {
                                 placeDao.insertAll(entities);
                                 Log.d(SYNC_TAG, entities.size() + " lugares guardados en Room");
                                 Log.d(SYNC_TAG, "Sincronización completada");
+                                if (callback != null) {
+                                    callback.onSuccess();
+                                }
                             } catch (Exception e) {
                                 Log.e(SYNC_TAG, "Error al guardar en Room: " + e.getMessage());
+                                if (callback != null) {
+                                    callback.onFailure();
+                                }
                             }
                         });
                     } else {
                         Log.d(SYNC_TAG, "La lista recibida está vacía, no se actualiza Room");
+                        if (callback != null) {
+                            callback.onSuccess();
+                        }
                     }
                 } else {
                     Log.e(SYNC_TAG, "Error en la respuesta de la API: " + response.code());
+                    if (callback != null) {
+                        callback.onFailure();
+                    }
                 }
             }
 
@@ -87,6 +108,9 @@ public class PlaceRepository {
             public void onFailure(Call<List<PlaceRemoteDto>> call, Throwable t) {
                 Log.e(SYNC_TAG, "Error de red: " + t.getMessage());
                 Log.d(SYNC_TAG, "Manteniendo datos locales previos");
+                if (callback != null) {
+                    callback.onFailure();
+                }
             }
         });
     }
