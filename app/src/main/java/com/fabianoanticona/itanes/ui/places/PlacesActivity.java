@@ -98,6 +98,12 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;

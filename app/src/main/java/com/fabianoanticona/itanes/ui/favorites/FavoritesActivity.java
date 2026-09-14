@@ -110,4 +110,10 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
         intent.putExtra(PlaceDetailActivity.EXTRA_PLACE_ID, placeId);
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
+    }
 }
