@@ -10,7 +10,10 @@ import com.fabianoanticona.itanes.data.mapper.PlaceMapper;
 import com.fabianoanticona.itanes.data.remote.dto.PlaceRemoteDto;
 import com.fabianoanticona.itanes.data.remote.retrofit.RetrofitClient;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -88,9 +91,28 @@ public class PlaceRepository {
                     if (!remotePlaces.isEmpty()) {
                         executorService.execute(() -> {
                             try {
+                                List<Integer> currentLocalIds = placeDao.getAllIds();
+                                Set<Integer> remoteIds = new HashSet<>();
+                                for (PlaceRemoteDto remotePlace : remotePlaces) {
+                                    remoteIds.add(remotePlace.getId());
+                                }
+
+                                List<Integer> obsoleteIds = new ArrayList<>();
+                                for (Integer localId : currentLocalIds) {
+                                    if (!remoteIds.contains(localId)) {
+                                        obsoleteIds.add(localId);
+                                    }
+                                }
+
                                 List<PlaceEntity> entities = PlaceMapper.toEntityList(remotePlaces);
                                 placeDao.insertAll(entities);
                                 Log.d(SYNC_TAG, entities.size() + " lugares guardados en Room");
+
+                                if (!obsoleteIds.isEmpty()) {
+                                    placeDao.deleteByIds(obsoleteIds);
+                                    Log.d(SYNC_TAG, obsoleteIds.size() + " registros obsoletos eliminados");
+                                }
+
                                 Log.d(SYNC_TAG, "Sincronización completada");
                                 if (callback != null) {
                                     callback.onSuccess();

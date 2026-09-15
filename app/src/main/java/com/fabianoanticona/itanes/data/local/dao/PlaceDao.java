@@ -29,4 +29,10 @@ public interface PlaceDao {
 
     @Query("SELECT places.* FROM places INNER JOIN favorites ON places.id = favorites.placeId ORDER BY favorites.createdAt DESC")
     List<PlaceEntity> getFavoritePlaces();
+
+    @Query("SELECT id FROM places")
+    List<Integer> getAllIds();
+
+    @Query("DELETE FROM places WHERE id IN (:ids)")
+    void deleteByIds(List<Integer> ids);
 }

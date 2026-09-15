@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/zoom_in_desc"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_add"
             app:tint="?attr/colorPrimary"
             app:backgroundTint="@color/color_surface" />
@@ -52,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/zoom_out_desc"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_remove"
             app:tint="?attr/colorPrimary"
             app:backgroundTint="@color/color_surface" />
