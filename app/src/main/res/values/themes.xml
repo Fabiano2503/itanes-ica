@@ -10,11 +10,12 @@
         <!-- Background and Surface -->
         <item name="android:windowBackground">@color/color_background</item>
         <item name="colorSurface">@color/color_surface</item>
+        <item name="colorSurfaceVariant">@color/color_surface_variant</item>
 
         <!-- Status bar -->
         <item name="android:statusBarColor">@color/color_primary_dark</item>
 
-        <!-- Text colors (Material3 defaults to onSurface, but we can nudge it) -->
+        <!-- Text colors -->
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="colorOnSurfaceVariant">@color/text_secondary</item>
 

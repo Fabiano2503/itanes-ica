@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             syncState = SyncState.IN_PROGRESS;
 
             // Repositorio para carga inicial y sincronización
-            PlaceRepository repository = new PlaceRepository(this);
+            PlaceRepository repository = PlaceRepository.getInstance(this);
 
             // Carga inicial de datos turísticos (Seed) si Room está vacío
             PlaceDataSeeder seeder = new PlaceDataSeeder(repository);

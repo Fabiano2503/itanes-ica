@@ -21,6 +21,7 @@ import retrofit2.Response;
 public class PlaceRepository {
 
     private static final String SYNC_TAG = "ITANES_SYNC";
+    private static volatile PlaceRepository INSTANCE;
     private final PlaceDao placeDao;
     private final ExecutorService executorService;
 
@@ -29,10 +30,21 @@ public class PlaceRepository {
         void onFailure();
     }
 
-    public PlaceRepository(Context context) {
+    private PlaceRepository(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         this.placeDao = db.placeDao();
         this.executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public static PlaceRepository getInstance(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (PlaceRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new PlaceRepository(context);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public List<PlaceEntity> getAllPlaces() {

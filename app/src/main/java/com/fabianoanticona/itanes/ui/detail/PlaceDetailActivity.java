@@ -52,8 +52,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        repository = new PlaceRepository(this);
-        favoriteRepository = new FavoriteRepository(this);
+        repository = PlaceRepository.getInstance(this);
+        favoriteRepository = FavoriteRepository.getInstance(this);
         initViews();
 
         currentPlaceId = getIntent().getIntExtra(EXTRA_PLACE_ID, -1);

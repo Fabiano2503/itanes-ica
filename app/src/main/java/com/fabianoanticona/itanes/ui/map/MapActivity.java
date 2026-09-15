@@ -64,7 +64,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             return;
         }
 
-        repository = new PlaceRepository(this);
+        repository = PlaceRepository.getInstance(this);
         initViews();
 
         mapView.onCreate(savedInstanceState);

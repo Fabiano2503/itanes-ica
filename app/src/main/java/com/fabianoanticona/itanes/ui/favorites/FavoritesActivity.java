@@ -42,7 +42,7 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
             getSupportActionBar().setTitle(R.string.nav_favorites);
         }
 
-        repository = new PlaceRepository(this);
+        repository = PlaceRepository.getInstance(this);
         layoutEmptyState = findViewById(R.id.layoutEmptyState);
         recyclerFavorites = findViewById(R.id.recyclerFavorites);
 

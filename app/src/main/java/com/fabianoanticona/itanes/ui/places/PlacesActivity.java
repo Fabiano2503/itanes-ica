@@ -37,7 +37,7 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
             getSupportActionBar().setTitle(R.string.tour_name);
         }
 
-        repository = new PlaceRepository(this);
+        repository = PlaceRepository.getInstance(this);
         initRecyclerView();
         loadPlaces();
         setupBottomNavigation();

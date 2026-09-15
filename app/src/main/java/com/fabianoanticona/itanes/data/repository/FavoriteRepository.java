@@ -10,11 +10,23 @@ import java.util.List;
 
 public class FavoriteRepository {
 
+    private static volatile FavoriteRepository INSTANCE;
     private final FavoriteDao favoriteDao;
 
-    public FavoriteRepository(Context context) {
+    private FavoriteRepository(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         this.favoriteDao = db.favoriteDao();
+    }
+
+    public static FavoriteRepository getInstance(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (FavoriteRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new FavoriteRepository(context);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public void addFavorite(FavoriteEntity favorite) {

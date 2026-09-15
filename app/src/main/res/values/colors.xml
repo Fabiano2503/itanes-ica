@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#1E40AF</color>
-    <color name="color_primary_dark">#172554</color>
-    <color name="color_secondary">#F59E0B</color>
+    <color name="color_primary">#0A2463</color>
+    <color name="color_primary_dark">#051231</color>
+    <color name="color_secondary">#407076</color>
+
+    <!-- Colores para Tags de Rutas del JSON -->
+    <color name="tag_cultura_historia">#6D4C3D</color>
+    <color name="tag_naturaleza_aventura">#29524A</color>
+
+    <color name="color_surface_variant">#C1B2AB</color>
+
+    <!-- Estructura base de UI, Lectura y Accesibilidad -->
     <color name="color_background">#F8FAFC</color>
     <color name="color_surface">#FFFFFF</color>
     <color name="text_primary">#0F172A</color>
