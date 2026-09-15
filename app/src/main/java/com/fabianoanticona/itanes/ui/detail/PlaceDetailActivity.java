@@ -2,6 +2,7 @@ package com.fabianoanticona.itanes.ui.detail;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     private ImageView imageDetailPlace;
     private TextView textDetailName, textDetailShortDesc, textDetailFullDesc, textDetailAddress, textDetailCoords;
-    private Button btnFavorite, btnShare, btnMap;
+    private Button btnFavorite, btnShare, btnMap, btnDirections;
     private boolean isFavorite = false;
     private int currentPlaceId = -1;
     private PlaceEntity currentPlace;
@@ -68,6 +69,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(v -> toggleFavorite());
         btnShare.setOnClickListener(v -> sharePlace());
         btnMap.setOnClickListener(v -> openMap());
+        btnDirections.setOnClickListener(v -> openDirections());
     }
 
     private void initViews() {
@@ -80,6 +82,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         btnFavorite = findViewById(R.id.btnFavorite);
         btnShare = findViewById(R.id.btnShare);
         btnMap = findViewById(R.id.btnMap);
+        btnDirections = findViewById(R.id.btnDirections);
     }
 
     private void loadPlaceDetail(int placeId) {
@@ -173,6 +176,30 @@ public class PlaceDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(EXTRA_PLACE_ID, currentPlaceId);
         startActivity(intent);
+    }
+
+    private void openDirections() {
+        if (currentPlace == null) return;
+
+        double latitude = currentPlace.getLatitude();
+        double longitude = currentPlace.getLongitude();
+
+        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            Toast.makeText(this, R.string.error_invalid_location, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String uriString = String.format(Locale.US,
+                "https://www.google.com/maps/dir/?api=1&destination=%.6f,%.6f&travelmode=driving",
+                latitude, longitude);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriString));
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.error_no_navigation_app, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

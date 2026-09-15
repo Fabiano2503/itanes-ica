@@ -12,9 +12,12 @@
     <string name="btn_favorite_remove">♥ Quitar de favoritos</string>
     <string name="btn_share">Compartir</string>
     <string name="btn_map">Ver en mapa</string>
+    <string name="btn_directions">Cómo llegar</string>
     <string name="label_address">Dirección:</string>
     <string name="label_coordinates">Coordenadas:</string>
     <string name="error_loading_place">Error al cargar el lugar</string>
+    <string name="error_no_navigation_app">No hay aplicación compatible instalada</string>
+    <string name="error_invalid_location">No hay una ubicación válida disponible para este lugar.</string>
 
     <string name="share_chooser_title">Compartir lugar con&#8230;</string>
     <string name="share_error">No se encontró una aplicación para compartir.</string>

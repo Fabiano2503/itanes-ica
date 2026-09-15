@@ -128,6 +128,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/textDetailCoords" />
 
             <Button
+                android:id="@+id/btnDirections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/btn_directions"
+                app:icon="@drawable/ic_directions"
+                app:iconGravity="textStart"
+                app:layout_constraintTop_toBottomOf="@+id/btnFavorite" />
+
+            <Button
                 android:id="@+id/btnShare"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -139,7 +150,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btnMap"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnFavorite" />
+                app:layout_constraintTop_toBottomOf="@+id/btnDirections" />
 
             <Button
                 android:id="@+id/btnMap"
