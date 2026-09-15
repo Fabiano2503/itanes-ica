@@ -28,7 +28,9 @@ public class PlaceMapper {
         List<PlaceEntity> entities = new ArrayList<>();
         if (remotePlaces != null) {
             for (PlaceRemoteDto dto : remotePlaces) {
-                entities.add(toEntity(dto));
+                if (dto != null) {
+                    entities.add(toEntity(dto));
+                }
             }
         }
         return entities;

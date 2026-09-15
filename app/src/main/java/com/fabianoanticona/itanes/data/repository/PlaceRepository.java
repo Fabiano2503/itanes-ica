@@ -94,7 +94,9 @@ public class PlaceRepository {
                                 List<Integer> currentLocalIds = placeDao.getAllIds();
                                 Set<Integer> remoteIds = new HashSet<>();
                                 for (PlaceRemoteDto remotePlace : remotePlaces) {
-                                    remoteIds.add(remotePlace.getId());
+                                    if (remotePlace != null) {
+                                        remoteIds.add(remotePlace.getId());
+                                    }
                                 }
 
                                 List<Integer> obsoleteIds = new ArrayList<>();

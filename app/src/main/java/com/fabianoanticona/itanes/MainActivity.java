@@ -49,18 +49,21 @@ public class MainActivity extends AppCompatActivity {
 
             // Carga inicial de datos turísticos (Seed) si Room está vacío
             PlaceDataSeeder seeder = new PlaceDataSeeder(repository);
-            seeder.seed();
-
-            // Disparar sincronización con API REST
-            repository.syncPlaces(new PlaceRepository.SyncCallback() {
+            seeder.seed(new PlaceDataSeeder.SeedCallback() {
                 @Override
-                public void onSuccess() {
-                    syncState = SyncState.COMPLETED_SUCCESS;
-                }
+                public void onComplete() {
+                    // Disparar sincronización con API REST solo después de terminar el seed
+                    repository.syncPlaces(new PlaceRepository.SyncCallback() {
+                        @Override
+                        public void onSuccess() {
+                            syncState = SyncState.COMPLETED_SUCCESS;
+                        }
 
-                @Override
-                public void onFailure() {
-                    syncState = SyncState.NOT_STARTED;
+                        @Override
+                        public void onFailure() {
+                            syncState = SyncState.NOT_STARTED;
+                        }
+                    });
                 }
             });
         }

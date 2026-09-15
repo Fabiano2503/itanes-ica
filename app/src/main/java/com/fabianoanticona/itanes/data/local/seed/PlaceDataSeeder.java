@@ -21,7 +21,15 @@ public class PlaceDataSeeder {
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
+    public interface SeedCallback {
+        void onComplete();
+    }
+
     public void seed() {
+        seed(null);
+    }
+
+    public void seed(SeedCallback callback) {
         executorService.execute(() -> {
             int count = repository.getCount();
             if (count == 0) {
@@ -97,6 +105,10 @@ public class PlaceDataSeeder {
 
             int finalCount = repository.getCount();
             Log.d(TAG, "PlaceDataSeeder: " + finalCount + " lugares disponibles en Room");
+
+            if (callback != null) {
+                callback.onComplete();
+            }
         });
     }
 }
