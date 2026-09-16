@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#0A2463</color>
-    <color name="color_primary_dark">#051231</color>
-    <color name="color_secondary">#407076</color>
+    <!-- Paleta "Oasis & Sands" -->
+    <color name="color_primary">#1E3A8A</color>
+    <color name="color_primary_dark">#172554</color>
+    <color name="color_secondary">#D97706</color>
+    <color name="color_accent">#F59E0B</color>
 
-    <!-- Colores para Tags de Rutas del JSON -->
-    <color name="tag_cultura_historia">#6D4C3D</color>
-    <color name="tag_naturaleza_aventura">#29524A</color>
+    <!-- Colores para Tags de Rutas -->
+    <color name="tag_cultura_historia">#78350F</color>
+    <color name="tag_naturaleza_aventura">#065F46</color>
 
-    <color name="color_surface_variant">#C1B2AB</color>
+    <color name="color_surface_variant">#E5E7EB</color>
 
     <!-- Estructura base de UI, Lectura y Accesibilidad -->
-    <color name="color_background">#F8FAFC</color>
+    <color name="color_background">#FFFBF0</color>
     <color name="color_surface">#FFFFFF</color>
-    <color name="text_primary">#0F172A</color>
-    <color name="text_secondary">#475569</color>
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
     <color name="text_on_primary">#FFFFFF</color>
-    <color name="color_error">#DC2626</color>
+    <color name="text_on_secondary">#FFFFFF</color>
+    <color name="color_error">#B91C1C</color>
 </resources>

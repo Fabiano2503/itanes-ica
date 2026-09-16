@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="400dp"
+    android:viewportWidth="400"
+    android:viewportHeight="400">
+
+    <!-- Sky -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M0,0h400v250h-400z" />
+
+    <!-- Sun -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M320,60m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0" />
+
+    <!-- Distant Dunes -->
+    <path
+        android:fillColor="#B45309"
+        android:pathData="M0,250 C100,200 200,280 300,220 C350,190 400,230 400,250 L400,400 L0,400 Z" />
+
+    <!-- Main Dunes -->
+    <path
+        android:fillColor="#D97706"
+        android:pathData="M0,300 C80,260 180,320 280,250 C340,210 400,280 400,320 L400,400 L0,400 Z" />
+
+    <!-- Oasis Water -->
+    <path
+        android:fillColor="#065F46"
+        android:pathData="M120,350 Q200,320 280,350 Q200,380 120,350 Z" />
+
+    <!-- Palm Trees Stylized -->
+    <path
+        android:fillColor="#064E3B"
+        android:pathData="M180,330 L185,310 L190,330 Z M210,330 L215,310 L220,330 Z M195,335 L200,315 L205,335 Z" />
+
+</vector>

@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">ITANES</string>
-    <string name="tour_name">ICA</string>
-    <string name="course_text">Trabajo Final - Desarrollo de Aplicaciones Móviles</string>
-    <string name="places_count">5 puntos turísticos</string>
-    <string name="button_explore">Explorar recorrido</string>
+    <string name="tour_name">RUTAS ICA</string>
+    <string name="course_text">Descubre la magia del desierto, el sabor de sus viñedos y el misterio de su historia.</string>
+    <string name="places_count">5 destinos inolvidables</string>
+    <string name="button_explore">Comenzar Aventura</string>
 
     <string name="places_to_discover">5 lugares para descubrir</string>
     <string name="placeholder_image_desc">Imagen del lugar</string>
     <string name="placeholder_image_desc_named">Imagen de %1$s</string>
 
-    <string name="btn_favorite_add">♡ Guardar en favoritos</string>
-    <string name="btn_favorite_remove">♥ Quitar de favoritos</string>
+    <string name="btn_favorite_add">Guardar en favoritos</string>
+    <string name="btn_favorite_remove">Quitar de favoritos</string>
     <string name="btn_share">Compartir</string>
     <string name="btn_map">Ver en mapa</string>
     <string name="btn_directions">Cómo llegar</string>
@@ -50,6 +50,6 @@
     <string name="nav_favorites">Favoritos</string>
 
     <!-- Favorites Empty State -->
-    <string name="empty_favorites_title">Aún no tienes lugares favoritos</string>
-    <string name="empty_favorites_subtitle">Guarda lugares para encontrarlos rápidamente aquí</string>
+    <string name="empty_favorites_title">Tu bitácora está vacía</string>
+    <string name="empty_favorites_subtitle">Guarda tus lugares favoritos y planifica tu próxima parada en Ica.</string>
 </resources>

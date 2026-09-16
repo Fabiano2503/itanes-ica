@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ITANES" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ITANES" parent="Theme.Material3.Light.NoActionBar">
         <!-- Main colors -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorOnPrimary">@color/text_on_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorAccent">@color/color_accent</item>
 
         <!-- Background and Surface -->
         <item name="android:windowBackground">@color/color_background</item>
@@ -13,7 +14,11 @@
         <item name="colorSurfaceVariant">@color/color_surface_variant</item>
 
         <!-- Status bar -->
-        <item name="android:statusBarColor">@color/color_primary_dark</item>
+        <item name="android:statusBarColor">@color/color_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/color_surface</item>
 
         <!-- Text colors -->
         <item name="colorOnSurface">@color/text_primary</item>
@@ -21,7 +26,21 @@
 
         <!-- Error -->
         <item name="colorError">@color/color_error</item>
+
+        <!-- Typography Defaults -->
+        <item name="textAppearanceHeadlineLarge">@style/AppTextAppearance.HeadlineLarge</item>
+        <item name="textAppearanceTitleLarge">@style/AppTextAppearance.TitleLarge</item>
     </style>
 
     <style name="Theme.ITANES" parent="Base.Theme.ITANES" />
+
+    <style name="AppTextAppearance.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="AppTextAppearance.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
 </resources>
