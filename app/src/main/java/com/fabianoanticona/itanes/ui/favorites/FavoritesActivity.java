@@ -30,6 +30,7 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private LinearLayout layoutEmptyState;
     private RecyclerView recyclerFavorites;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,7 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
         super.onResume();
         loadFavorites();
         
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_favorites);
+        bottomNavigationView.setSelectedItemId(R.id.nav_favorites);
     }
 
     private void initRecyclerView() {
@@ -83,10 +83,10 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
     }
 
     private void setupBottomNavigation() {
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_favorites);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_favorites);
 
-        bottomNav.setOnItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
                 Intent intent = new Intent(this, MainActivity.class);

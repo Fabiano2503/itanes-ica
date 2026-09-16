@@ -25,6 +25,7 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     private PlaceAdapter adapter;
     private PlaceRepository repository;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +50,14 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
         // Recargar datos al volver a la actividad para mostrar posibles actualizaciones de la sincronización
         loadPlaces();
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_places);
+        bottomNavigationView.setSelectedItemId(R.id.nav_places);
     }
 
     private void setupBottomNavigation() {
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        bottomNav.setSelectedItemId(R.id.nav_places);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_places);
 
-        bottomNav.setOnItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
                 Intent intent = new Intent(this, MainActivity.class);

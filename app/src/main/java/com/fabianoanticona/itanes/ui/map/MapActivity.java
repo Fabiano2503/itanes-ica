@@ -41,6 +41,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private PlaceEntity currentPlace;
     private int placeId;
+    private boolean isStyleReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 progressBarMap.setVisibility(View.GONE);
                 if (currentPlace != null) {
                     displayPlaceInfo();
-                    if (mapLibreMap != null) {
+                    if (mapLibreMap != null && isStyleReady) {
                         setupMapLocation();
                     }
                 } else {
@@ -112,6 +113,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.mapLibreMap = mapLibreMap;
 
         mapLibreMap.setStyle(new Style.Builder().fromUri("https://tiles.openfreemap.org/styles/liberty"), style -> {
+            isStyleReady = true;
             if (currentPlace != null) {
                 setupMapLocation();
             }
@@ -167,7 +169,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        getOnBackPressedDispatcher().onBackPressed();
         return true;
     }
 

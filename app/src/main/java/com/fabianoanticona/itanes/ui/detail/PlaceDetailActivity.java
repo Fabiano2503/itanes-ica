@@ -106,6 +106,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         textDetailShortDesc.setText(place.getShortDescription());
         textDetailFullDesc.setText(place.getDescription());
         textDetailAddress.setText(place.getAddress());
+        imageDetailPlace.setContentDescription(getString(R.string.placeholder_image_desc_named, place.getName()));
 
         String coords = String.format(Locale.getDefault(), "%.6f, %.6f", place.getLatitude(), place.getLongitude());
         textDetailCoords.setText(coords);
@@ -210,7 +211,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        getOnBackPressedDispatcher().onBackPressed();
         return true;
     }
 }

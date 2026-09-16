@@ -7,6 +7,7 @@
 
     <string name="places_to_discover">5 lugares para descubrir</string>
     <string name="placeholder_image_desc">Imagen del lugar</string>
+    <string name="placeholder_image_desc_named">Imagen de %1$s</string>
 
     <string name="btn_favorite_add">♡ Guardar en favoritos</string>
     <string name="btn_favorite_remove">♥ Quitar de favoritos</string>
