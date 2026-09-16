@@ -2,6 +2,8 @@ package com.fabianoanticona.itanes.ui.places;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,9 +14,11 @@ import com.fabianoanticona.itanes.R;
 import com.fabianoanticona.itanes.MainActivity;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.data.util.NetworkUtils;
 import com.fabianoanticona.itanes.ui.detail.PlaceDetailActivity;
 import com.fabianoanticona.itanes.ui.favorites.FavoritesActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -26,6 +30,9 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     private PlaceRepository repository;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private BottomNavigationView bottomNavigationView;
+    private ProgressBar progressBar;
+    private View layoutEmptyState;
+    private RecyclerView recyclerPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,10 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
         }
 
         repository = PlaceRepository.getInstance(this);
+        progressBar = findViewById(R.id.progressBar);
+        layoutEmptyState = findViewById(R.id.layoutEmptyState);
+        recyclerPlaces = findViewById(R.id.recyclerPlaces);
+
         initRecyclerView();
         loadPlaces();
         setupBottomNavigation();
@@ -77,18 +88,29 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerPlaces = findViewById(R.id.recyclerPlaces);
         recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PlaceAdapter(this);
         recyclerPlaces.setAdapter(adapter);
     }
 
     private void loadPlaces() {
+        if (!NetworkUtils.isOnline(this)) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.message_offline_mode, Snackbar.LENGTH_LONG).show();
+        }
+        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
         executorService.execute(() -> {
             List<PlaceEntity> places = repository.getAllPlaces();
             runOnUiThread(() -> {
                 if (isFinishing() || isDestroyed()) return;
-                adapter.setPlaces(places);
+                if (progressBar != null) progressBar.setVisibility(View.GONE);
+                if (places == null || places.isEmpty()) {
+                    if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.VISIBLE);
+                    if (recyclerPlaces != null) recyclerPlaces.setVisibility(View.GONE);
+                } else {
+                    if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.GONE);
+                    if (recyclerPlaces != null) recyclerPlaces.setVisibility(View.VISIBLE);
+                    adapter.setPlaces(places);
+                }
             });
         });
     }

@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.fabianoanticona.itanes.R;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.data.util.LocationValidator;
 import com.fabianoanticona.itanes.ui.detail.PlaceDetailActivity;
 
 import org.maplibre.android.MapLibre;
@@ -126,7 +127,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         double lat = currentPlace.getLatitude();
         double lng = currentPlace.getLongitude();
 
-        if (isValidCoordinate(lat, lng)) {
+        if (LocationValidator.isValid(lat, lng)) {
             LatLng location = new LatLng(lat, lng);
             
             // Immediate camera move to target location and zoom
@@ -161,10 +162,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mapLibreMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         }
-    }
-
-    private boolean isValidCoordinate(double lat, double lng) {
-        return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
     }
 
     @Override

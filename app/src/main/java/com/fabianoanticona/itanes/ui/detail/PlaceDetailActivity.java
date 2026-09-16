@@ -18,6 +18,7 @@ import com.fabianoanticona.itanes.data.local.entity.FavoriteEntity;
 import com.fabianoanticona.itanes.data.local.entity.PlaceEntity;
 import com.fabianoanticona.itanes.data.repository.FavoriteRepository;
 import com.fabianoanticona.itanes.data.repository.PlaceRepository;
+import com.fabianoanticona.itanes.data.util.LocationValidator;
 import com.fabianoanticona.itanes.ui.map.MapActivity;
 
 import java.text.SimpleDateFormat;
@@ -174,6 +175,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
     }
 
     private void openMap() {
+        if (currentPlace != null && !LocationValidator.isValid(currentPlace.getLatitude(), currentPlace.getLongitude())) {
+            Toast.makeText(this, R.string.error_invalid_coords, Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(EXTRA_PLACE_ID, currentPlaceId);
         startActivity(intent);
@@ -185,8 +190,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
         double latitude = currentPlace.getLatitude();
         double longitude = currentPlace.getLongitude();
 
-        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
-            Toast.makeText(this, R.string.error_invalid_location, Toast.LENGTH_SHORT).show();
+        if (!LocationValidator.isValid(latitude, longitude)) {
+            Toast.makeText(this, R.string.error_invalid_coords, Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 public class PlaceDataSeeder {
 
-    private static final String TAG = "PlaceDataSeeder";
+    private static final String TAG = "ITANES_SYNC";
     private final PlaceRepository repository;
     private final ExecutorService executorService;
 
