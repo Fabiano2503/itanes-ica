@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,7 +89,12 @@ public class PlacesActivity extends AppCompatActivity implements PlaceAdapter.On
     }
 
     private void initRecyclerView() {
-        recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
+        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
+        if (isTablet) {
+            recyclerPlaces.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
+        }
         adapter = new PlaceAdapter(this);
         recyclerPlaces.setAdapter(adapter);
     }

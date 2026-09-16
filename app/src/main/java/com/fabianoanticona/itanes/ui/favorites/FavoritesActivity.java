@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,7 +61,12 @@ public class FavoritesActivity extends AppCompatActivity implements PlaceAdapter
     }
 
     private void initRecyclerView() {
-        recyclerFavorites.setLayoutManager(new LinearLayoutManager(this));
+        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
+        if (isTablet) {
+            recyclerFavorites.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            recyclerFavorites.setLayoutManager(new LinearLayoutManager(this));
+        }
         adapter = new PlaceAdapter(this);
         recyclerFavorites.setAdapter(adapter);
     }
